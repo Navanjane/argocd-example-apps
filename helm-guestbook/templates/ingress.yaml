@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gusetbook-ingress
+spec:
+  ingressClassName: {{ .Values.ingress.spec.ingressClassName }}
+  rules:
+    - host: {{ .Values.ingress.hosts }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ template "helm-guestbook.fullname" . }}
+                port:
+                  number: 8081
